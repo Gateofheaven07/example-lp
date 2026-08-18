@@ -324,6 +324,33 @@
                 transition: none !important;
             }
         }
+        .product-color-tint {
+            mix-blend-mode: color;
+            opacity: 0;
+            transition: opacity 0.35s ease, background-color 0.35s ease;
+        }
+        .product-color-tint.is-active {
+            opacity: 0.6;
+        }
+        .color-swatch {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border-radius: 9999px;
+            border: none;
+            padding: 0;
+            position: relative;
+            cursor: pointer;
+            box-shadow: inset 0 0 0 1px rgba(26, 28, 28, 0.1);
+            transition: transform 0.25s cubic-bezier(.22,1,.36,1), box-shadow 0.25s ease;
+        }
+        .color-swatch:hover,
+        .color-swatch:focus-visible {
+            transform: scale(1.15);
+        }
+        .color-swatch.active {
+            box-shadow: inset 0 0 0 1px rgba(26, 28, 28, 0.1), 0 0 0 2px #ffffff, 0 0 0 3.5px rgba(26, 28, 28, 0.85);
+        }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
@@ -335,7 +362,7 @@
 <button id="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" class="md:hidden text-white p-1 -ml-1">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<a class="flex items-center gap-2 font-headline-md text-headline-md font-bold text-white tracking-tight" href="#"><img class="h-7 md:h-8 w-auto" src="Antarestar-logo.png" alt="Antarestar logo"/><span>ANTARE<span class="text-accent-orange">STAR</span></span></a>
+<a class="flex items-center gap-2 font-headline-md text-headline-md font-bold text-white tracking-tight" href="#"><img class="h-7 md:h-8 w-auto" src="Antarestar-logo.png" alt="Antarestar logo"/><span>ANTARESTAR</span></a>
 <nav class="hidden md:flex gap-6 items-center">
 <a class="font-interactive text-interactive font-bold uppercase tracking-widest text-white border-b-2 border-white pb-1 transition-colors duration-200" href="#">Gear</a>
 <a class="font-interactive text-interactive font-bold uppercase tracking-widest text-white/80 hover:text-white transition-colors duration-200" href="#">Apparel</a>
@@ -601,7 +628,7 @@ View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span
 </div>
 </section>
 <!-- Our Products -->
-<section class="w-full py-12 bg-surface reveal">
+<section id="our-products" class="w-full py-12 bg-surface reveal">
 <div class="max-w-container-max mx-auto px-6 md:px-[80px] mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
 <div>
 <span class="font-label-caps text-label-caps text-accent-orange tracking-widest">FULL CATALOG</span>
@@ -615,44 +642,64 @@ Lihat Semua Produk <span class="material-symbols-outlined text-[18px]">arrow_for
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 reveal-group">
 <!-- Product 1 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="A vibrant green technical hardshell jacket product photo on a plain background." src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Back side view of the hardshell jacket." src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="A vibrant green technical hardshell jacket product photo on a plain background." src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Back side view of the hardshell jacket." src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">APPAREL</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Jaket Hardshell Alpine Terra Peak</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp1.850.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Hijau Alpine" class="color-swatch active is-default" data-color="#4a5d3a" style="background-color:#4a5d3a" type="button"></button>
+<button aria-label="Hitam" class="color-swatch" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+<button aria-label="Oranye" class="color-swatch" data-color="#c96a2c" style="background-color:#c96a2c" type="button"></button>
+<button aria-label="Navy" class="color-swatch" data-color="#2b3a55" style="background-color:#2b3a55" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 2 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="A pair of rugged dark grey hiking boots with blue laces, product photo on plain background." src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Back side view of the hiking boots." src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="A pair of rugged dark grey hiking boots with blue laces, product photo on plain background." src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Back side view of the hiking boots." src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">FOOTWEAR</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Sepatu Hiking Terra Peak Ridge</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp1.250.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Abu-abu" class="color-swatch active is-default" data-color="#6b7280" style="background-color:#6b7280" type="button"></button>
+<button aria-label="Coklat" class="color-swatch" data-color="#7a4a2b" style="background-color:#7a4a2b" type="button"></button>
+<button aria-label="Hitam" class="color-swatch" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+<button aria-label="Tan" class="color-swatch" data-color="#c9a876" style="background-color:#c9a876" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 3 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="An orange dome tent pitched on plain background, product photo." src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Interior view of the dome tent." src="https://images.unsplash.com/photo-1622560481156-01734d919a2a?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="An orange dome tent pitched on plain background, product photo." src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Interior view of the dome tent." src="https://images.unsplash.com/photo-1622560481156-01734d919a2a?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">SHELTER</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Tenda Dome Terra Peak Basecamp 2P</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp2.100.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Oranye" class="color-swatch active is-default" data-color="#c96a2c" style="background-color:#c96a2c" type="button"></button>
+<button aria-label="Hijau" class="color-swatch" data-color="#4a5d3a" style="background-color:#4a5d3a" type="button"></button>
+<button aria-label="Biru" class="color-swatch" data-color="#2b5d8a" style="background-color:#2b5d8a" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 4 -->
@@ -662,24 +709,36 @@ Lihat Semua Produk <span class="material-symbols-outlined text-[18px]">arrow_for
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-on-surface-variant">LIGHTING</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Headlamp LED Terra Peak Nightscout</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp299.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Hitam" class="color-swatch active is-default" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+<button aria-label="Merah" class="color-swatch" data-color="#b3261e" style="background-color:#b3261e" type="button"></button>
+<button aria-label="Kuning" class="color-swatch" data-color="#e0b400" style="background-color:#e0b400" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 5 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="A rolled sleeping bag, product photo on plain background." src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Unrolled view of the sleeping bag." src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="A rolled sleeping bag, product photo on plain background." src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Unrolled view of the sleeping bag." src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">SLEEP SYSTEM</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Sleeping Bag Terra Peak Frostline -5°C</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp675.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Abu-abu" class="color-swatch active is-default" data-color="#6b7280" style="background-color:#6b7280" type="button"></button>
+<button aria-label="Merah" class="color-swatch" data-color="#b3261e" style="background-color:#b3261e" type="button"></button>
+<button aria-label="Navy" class="color-swatch" data-color="#2b3a55" style="background-color:#2b3a55" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 6 -->
@@ -689,38 +748,56 @@ Lihat Semua Produk <span class="material-symbols-outlined text-[18px]">arrow_for
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-on-surface-variant">TREKKING</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Trekking Pole Terra Peak Summit Carbon</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp425.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Hitam" class="color-swatch active is-default" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+<button aria-label="Silver" class="color-swatch" data-color="#c8c6c5" style="background-color:#c8c6c5" type="button"></button>
+<button aria-label="Oranye" class="color-swatch" data-color="#c96a2c" style="background-color:#c96a2c" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 7 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="A stainless steel insulated water bottle, product photo on plain background." src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Other side of the water bottle." src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="A stainless steel insulated water bottle, product photo on plain background." src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Other side of the water bottle." src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">HYDRATION</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Botol Minum Terra Peak ThermoFlask 750ml</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp215.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Silver" class="color-swatch active is-default" data-color="#c8c6c5" style="background-color:#c8c6c5" type="button"></button>
+<button aria-label="Hitam" class="color-swatch" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+<button aria-label="Biru" class="color-swatch" data-color="#2b5d8a" style="background-color:#2b5d8a" type="button"></button>
+<button aria-label="Oranye" class="color-swatch" data-color="#c96a2c" style="background-color:#c96a2c" type="button"></button>
+</div>
 </div>
 </a>
 <!-- Product 8 -->
 <a class="group card-lift relative flex flex-col bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden cursor-pointer reveal-item" href="#">
-<div class="relative aspect-square bg-surface-container overflow-hidden">
-<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" data-alt="A portable camping gas stove, product photo on plain background." src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=600&auto=format&fit=crop"/>
-<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" data-alt="Other angle of the portable gas stove." src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop"/>
+<div class="relative aspect-square bg-surface-container overflow-hidden group/media">
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover/media:opacity-0" data-alt="A portable camping gas stove, product photo on plain background." src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=600&auto=format&fit=crop"/>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover/media:opacity-100" data-alt="Other angle of the portable gas stove." src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop"/>
 <span class="absolute top-3 left-3 font-label-caps text-label-caps text-white" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">COOKWARE</span><button aria-label="Quick add" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-1 md:group-hover:translate-y-0 transition-all duration-300 hover:bg-accent-orange hover:text-white">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
 </button>
+<div class="product-color-tint absolute inset-0 pointer-events-none"></div>
 </div>
 <div class="p-4">
 <h3 class="font-body-sm text-body-sm text-on-surface mb-1 line-clamp-2">Kompor Portable Terra Peak FlameCore</h3>
 <p class="font-cta text-cta font-bold text-primary">Rp389.000</p>
+<div class="flex items-center gap-2.5 mt-3" data-swatch-group>
+<button aria-label="Silver" class="color-swatch active is-default" data-color="#c8c6c5" style="background-color:#c8c6c5" type="button"></button>
+<button aria-label="Hitam" class="color-swatch" data-color="#1a1c1c" style="background-color:#1a1c1c" type="button"></button>
+</div>
 </div>
 </a>
 </div>
@@ -1086,6 +1163,44 @@ View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span
         }
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
+    })();
+
+    (function () {
+        var groups = document.querySelectorAll('#our-products [data-swatch-group]');
+        groups.forEach(function (group) {
+            var card = group.closest('a');
+            var tint = card ? card.querySelector('.product-color-tint') : null;
+            if (!tint) return;
+            var swatches = group.querySelectorAll('.color-swatch');
+
+            function applyTint(color) {
+                tint.style.backgroundColor = color;
+                tint.classList.add('is-active');
+            }
+
+            function resetTint() {
+                var active = group.querySelector('.color-swatch.active');
+                if (active && !active.classList.contains('is-default')) {
+                    applyTint(active.dataset.color);
+                } else {
+                    tint.classList.remove('is-active');
+                }
+            }
+
+            swatches.forEach(function (swatch) {
+                swatch.addEventListener('mouseenter', function () { applyTint(swatch.dataset.color); });
+                swatch.addEventListener('focus', function () { applyTint(swatch.dataset.color); });
+                swatch.addEventListener('mouseleave', resetTint);
+                swatch.addEventListener('blur', resetTint);
+                swatch.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    swatches.forEach(function (s) { s.classList.remove('active'); });
+                    swatch.classList.add('active');
+                    resetTint();
+                });
+            });
+        });
     })();
 </script>
 <button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})" class="btn-lift fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-primary text-white shadow-xl flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
